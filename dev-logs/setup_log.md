@@ -146,3 +146,59 @@ export default [...compat.extends('next/core-web-vitals', 'next/typescript'), pr
 - `pnpm lint` → ✅ 通過
 - `pnpm format:check` → ✅ 整形済み
 - `pnpm dev` → ✅ 起動OK（ページが存在しないため404だが正常）
+
+---
+
+## 🪝 Husky + Lint-staged 導入（2025-04-14）
+
+### ✅ 目的
+
+- Cursor利用時に `Prettier` や `ESLint` が保存時に動かない問題を解消するため
+- `git commit` 前に整形・Lintチェックを自動実行
+
+---
+
+### 🔧 導入手順
+
+```bash
+pnpm dlx husky-init && pnpm install
+pnpm add -D lint-staged
+```
+
+- `prepare` スクリプトが自動で追加され、`.husky/pre-commit` も作成された
+
+---
+
+### 🧩 `package.json` に追加した設定
+
+```json
+"scripts": {
+  "prepare": "husky install"
+},
+"lint-staged": {
+  "**/*.{js,ts,tsx,json,css,md}": [
+    "prettier --write",
+    "eslint --fix"
+  ]
+}
+```
+
+---
+
+### 🔗 .husky/pre-commit の内容
+
+```sh
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+pnpm exec lint-staged
+```
+
+---
+
+### ✅ 動作確認ログ
+
+- コミット前に整形ミスを含んだファイルを検出
+- `pnpm exec lint-staged` により `prettier` で構文エラーを検知
+- `git commit` を自動ブロックし、元の状態にロールバック
+- Husky + lint-staged が **正しく動作することを確認済み！🎉**

@@ -36,6 +36,16 @@ Auth.js や NextAuth などの認証ライブラリには頼らず、OAuth連携
 
 ---
 
+## 🔧 コード整形・Linter構成
+
+- ESLint：Next.js公式プリセット使用
+- Prettier：フォーマッターとして導入（VSCodeで formatOnSave 対応）
+- eslint-config-prettier：競合するルールを無効化
+- pnpm：パッケージ管理ツール（軽量・高速・再現性◎）
+
+
+---
+
 ## 📌 API仕様
 
 | エンドポイント       | メソッド | 処理内容                                            |
@@ -87,8 +97,6 @@ model User {
 - OAuthプロバイダの追加（Twitter, LINEなど）
 - テスト自動化（`api/auth/*.test.ts`）
 - ポートフォリオ用UIの導入
-- Linter・フォーマッター導入（ESLint + Prettier + pnpm構成）
-
 ---
 
 ## 🧠 メモ

@@ -43,7 +43,6 @@ Auth.js や NextAuth などの認証ライブラリには頼らず、OAuth連携
 - eslint-config-prettier：競合するルールを無効化
 - pnpm：パッケージ管理ツール（軽量・高速・再現性◎）
 
-
 ---
 
 ## 📌 API仕様
@@ -97,6 +96,7 @@ model User {
 - OAuthプロバイダの追加（Twitter, LINEなど）
 - テスト自動化（`api/auth/*.test.ts`）
 - ポートフォリオ用UIの導入
+
 ---
 
 ## 🧠 メモ

@@ -79,10 +79,10 @@ out
 - 初期構成では `eslint.config.mjs` が `FlatCompat` により生成されていたため、以下のように調整：
 
 ```js
-import { dirname } from "path"
-import { fileURLToPath } from "url"
-import { FlatCompat } from "@eslint/eslintrc"
-import prettier from "eslint-config-prettier"
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
+import { FlatCompat } from '@eslint/eslintrc'
+import prettier from 'eslint-config-prettier'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -91,10 +91,7 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 })
 
-export default [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
-  prettier
-]
+export default [...compat.extends('next/core-web-vitals', 'next/typescript'), prettier]
 ```
 
 ---
@@ -112,3 +109,40 @@ export default [
 - Prettier + ESLint Flat Config は構成がシンプルでメンテしやすい
 - `eslint-config-next` 経由の `eslint-plugin-next` は `pnpm` では単体解決できず、FlatCompatで維持した方が安定
 - CLIスクリプト整備によって、CIやコミット前チェックも拡張しやすくなった
+
+---
+
+## ♻️ 追加対応（2025-04-14）
+
+### 🧼 不要ファイルの整理
+
+- `public/` 以下のデフォルト画像（`vercel.svg`, `file.svg` など）をすべて削除
+- `src/app/page.tsx` を削除（不要な初期ルートページ）
+- `.DS_Store`, `._*` など macOS の不要ファイルも削除済み
+
+---
+
+### 🎨 layout.tsx の調整
+
+- `metadata` にタイトル・説明を設定（SEO & SNS対応）
+- Googleフォント（Geist Sans / Mono）をインポートし、 `<html>` にクラス適用：
+
+```tsx
+<html lang="ja" className={`${geistSans.variable} ${geistMono.variable}`}>
+```
+
+---
+
+### 🌈 globals.css の最適化
+
+- `@theme inline` を削除（未使用のため）
+- `font-family: Arial` を削除し、Tailwind `font-sans` に一任
+- カスタム変数（--background / --foreground）と dark mode 対応は残して利用
+
+---
+
+### 🧪 環境確認
+
+- `pnpm lint` → ✅ 通過
+- `pnpm format:check` → ✅ 整形済み
+- `pnpm dev` → ✅ 起動OK（ページが存在しないため404だが正常）

@@ -24,26 +24,26 @@ Auth.js や NextAuth などの認証ライブラリには頼らず、OAuth連携
 
 ## 🏗 使用スタック構成
 
-| 項目 | 技術 |
-|------|------|
-| フレームワーク | Next.js（App Router） |
-| ORM | Prisma |
-| DB | Railway 上の PostgreSQL |
-| デプロイ | Vercel |
-| 認証 | OAuth2（Google/GitHubなど） |
-| トークン | id_token（JWT） |
+| 項目           | 技術                                             |
+| -------------- | ------------------------------------------------ |
+| フレームワーク | Next.js（App Router）                            |
+| ORM            | Prisma                                           |
+| DB             | Railway 上の PostgreSQL                          |
+| デプロイ       | Vercel                                           |
+| 認証           | OAuth2（Google/GitHubなど）                      |
+| トークン       | id_token（JWT）                                  |
 | セッション管理 | `Set-Cookie`（HttpOnly / Secure / SameSite=Lax） |
 
 ---
 
 ## 📌 API仕様
 
-| エンドポイント | メソッド | 処理内容 |
-|----------------|----------|----------|
-| `/auth/login` | GET | OAuthプロバイダへリダイレクト |
-| `/api/auth/callback` | GET | 認可コード受け取り → トークン取得 → Cookie保存 |
-| `/api/me` | GET | CookieからJWTを検証し、ログイン中ユーザー情報を返す |
-| `/api/logout` | POST | Cookieを削除しログアウト処理を行う |
+| エンドポイント       | メソッド | 処理内容                                            |
+| -------------------- | -------- | --------------------------------------------------- |
+| `/auth/login`        | GET      | OAuthプロバイダへリダイレクト                       |
+| `/api/auth/callback` | GET      | 認可コード受け取り → トークン取得 → Cookie保存      |
+| `/api/me`            | GET      | CookieからJWTを検証し、ログイン中ユーザー情報を返す |
+| `/api/logout`        | POST     | Cookieを削除しログアウト処理を行う                  |
 
 ---
 
@@ -57,19 +57,19 @@ model User {
   avatarUrl String?
   createdAt DateTime @default(now())
 }
-````
+```
 
 ---
 
 ## 🔐 認証設計とセキュリティ
 
-|項目|設定|
-|---|---|
-|JWTの保存先|HttpOnly Cookie|
-|Cookie属性|`HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=3600`|
-|JWT検証方法|OAuthプロバイダの公開鍵で署名検証|
-|セッション形式|Stateless（JWTベース）|
-|エラー処理|JWT不正・期限切れ：401、ユーザー未登録：insert or 404|
+| 項目           | 設定                                                   |
+| -------------- | ------------------------------------------------------ |
+| JWTの保存先    | HttpOnly Cookie                                        |
+| Cookie属性     | `HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=3600` |
+| JWT検証方法    | OAuthプロバイダの公開鍵で署名検証                      |
+| セッション形式 | Stateless（JWTベース）                                 |
+| エラー処理     | JWT不正・期限切れ：401、ユーザー未登録：insert or 404  |
 
 ---
 

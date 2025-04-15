@@ -2,56 +2,46 @@
 title: タスク一覧
 type: task
 status: active
-last_updated: 2025-04-14
+last_updated: 2025-04-15
 ---
 
-# ✅ 開発タスクリスト（OAuthログインアプリ）
+# ✅ 実装Todo（OAuthログインアプリ）
 
-このファイルは、README.md の要件に基づいた開発タスクの進行管理用です。Cursorなどで認識させるため、YAML形式のfrontmatterを含んでいます。
+## 🎯 最小構成ログインAPIの完成
 
----
+- [ ] `/auth/login` のリダイレクト処理実装（Google OAuthプロバイダ）
+- [ ] `/api/auth/callback` のトークン取得 → JWT保存（HttpOnly Cookie）処理
+- [ ] `/api/me` JWT検証 → ユーザー情報返却処理
+- [ ] `/api/logout` Cookie削除 → ログアウト処理
 
-## 🏁 最小構成タスク（MVP）
+## 🧱 セッション・Cookie制御
 
-- [ ] `/auth/login`：OAuthプロバイダにリダイレクトする処理
-- [ ] `/api/auth/callback`：認可コード受け取り → id_token取得 → Cookie保存
-- [ ] `/api/me`：JWTをCookieから検証してユーザー情報を返す
-- [ ] `/api/logout`：Cookieを削除してログアウト
-- [ ] JWTの署名検証処理（`lib/auth.ts`）
-- [ ] Google OAuth連携処理（`lib/oauth.ts`）
+- [ ] Cookie仕様定義（HttpOnly / Secure / SameSite=Lax / Max-Age 3600）
+- [ ] JWTの保存場所、検証方法の決定（OAuthプロバイダの公開鍵を使用）
+- [ ] JWT検証ロジックを `lib/auth.ts` に実装
+- [ ] Cookieの削除処理を `logout` APIに実装
 
----
+## 🗃 DB処理（Prisma）
 
-## 🔐 認証状態の構成タスク
+- [ ] Prisma schema に `User` モデルを定義済み
+- [ ] 初回ログイン時のみ `User` を `upsert`（なければ挿入）する処理を追加
 
-- [ ] `useAuth()`：クライアント側で `/api/me` を叩いて状態管理
-- [ ] `middleware.ts`：JWTがなければ `/auth/login` にリダイレクト
-- [ ] JWT失効・不正のときのエラー処理（401）
-- [ ] 初回ログイン時に `User` テーブルへ登録（なければinsert）
+## 🧭 認証状態のルール実装
 
----
+- [ ] `middleware.ts`：Cookieなければ `/auth/login` にリダイレクト
+- [ ] `/dashboard` 等の保護ルートで `middleware.ts` を活用
+- [ ] `useAuth()` composableの実装（`/api/me` を叩いて状態管理）
 
-## 🗃 DB・Prisma関連タスク
+## 🧹 UI・コードの整理
 
-- [ ] `User` モデルを `schema.prisma` に定義
-- [ ] `prisma migrate dev` によるテーブル作成
-- [ ] OAuthログイン時に `User` テーブルと照合＆登録
+- [x] `public/` フォルダの初期素材を削除
+- [x] `src/app/page.tsx` の削除
+- [x] `layout.tsx` のタイトル修正
+- [x] `globals.css` の未使用スタイル整理
 
----
+## 🛠 セットアップ＆開発環境まわり
 
-## 🧪 テスト観点・動作確認（手動）
-
-- [ ] 未ログイン状態で `/api/me` にアクセスして 401 を確認
-- [ ] CookieにHttpOnly, Secure, SameSite属性が付いていること
-- [ ] 正常ログインで `/api/me` からユーザー情報が取得できること
-- [ ] ログアウト後に `/api/me` が401になること
-
----
-
-## 🚀 応用拡張タスク（任意ブランチ）
-
-- [ ] 自前のメール+パスワード認証（bcryptでハッシュ処理）
-- [ ] ロール・権限管理（RBAC）
-- [ ] 複数OAuthプロバイダ対応（GitHub, Twitterなど）
-- [ ] テスト自動化（`api/auth/*.test.ts`）
-- [ ] ポートフォリオ向けUIの導入（`/dashboard`など）
+- [x] ESLint / Prettier 導入
+- [x] `pnpm format` / `pnpm lint` 動作確認済み
+- [x] Husky導入（pre-commitで整形＆lintチェック）
+- [x] `dev-logs/setup_log.md` に導入記録を保存済み

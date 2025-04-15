@@ -46,3 +46,20 @@ last_updated: 2025-04-15
 
 - `/api/logout` を実装して、Cookie を削除するログアウト処理を追加
 - `jwt.verify()` または `jose` によるトークンの署名検証を導入予定
+
+## 2025-04-15（さらに続き）
+
+### 完了：
+
+- `/api/logout` 実装
+  - `token` Cookie を削除（maxAge: 0）
+  - GETアクセスでは405になることを確認（POSTのみ許可）
+  - `src/app/logout/page.tsx` にログアウトボタンを配置し、fetchでPOST送信
+- ブラウザ操作で `Logout` ボタン押下 → Cookie削除 ✅
+- `/api/me` にアクセス → `401 Unauthorized` を返すことを確認 ✅（ログアウト成功）
+
+### 次のアクション候補：
+
+- JWTの署名検証（`jose`でGoogle公開鍵を取得してverify）
+- PrismaでUserをDBに保存（emailをキーにUpsert）
+- `middleware.ts` を導入して、ログイン必須ページのアクセス制御を行う

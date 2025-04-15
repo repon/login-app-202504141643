@@ -26,3 +26,23 @@ last_updated: 2025-04-15
 - `/api/me` 実装
   - CookieからJWTを読み取り、ユーザー情報を返すAPI
   - 後でJWT署名検証も追加予定
+
+## 2025-04-15（続き）
+
+### 完了：
+
+- `/api/me` を実装し、CookieからJWTを読み取ってユーザー情報を返す処理を確認 ✅
+- `token` Cookie を decode し、以下の情報が取得できた：
+
+```json
+{
+  "email": ***,
+  "name": ***,
+  "avatar": url
+}
+```
+
+### 次のアクション：
+
+- `/api/logout` を実装して、Cookie を削除するログアウト処理を追加
+- `jwt.verify()` または `jose` によるトークンの署名検証を導入予定

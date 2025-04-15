@@ -9,20 +9,6 @@ last_updated: 2025-04-15
 
 ## 2025-04-15
 
-### 着手：
-
-- `/auth/login` 実装に着手予定
-
-### 実施：
-
-- `development.md` を修正（誤って完了扱いにしていた項目を未完に戻す）
-- `setup_log.md` とともに `dev-logs/` にまとめて整理
-
-### 次のアクション：
-
-- `/auth/login` ルートの `page.tsx` ＋ `redirect()` 実装
-- `GOOGLE_CLIENT_ID` など環境変数の `.env.local` 設定
-
 ### 完了：
 
 - Google Cloud Console にて OAuth 同意画面・認証情報を設定
@@ -30,8 +16,13 @@ last_updated: 2025-04-15
 - `/auth/login` にアクセス → Googleログイン画面へ遷移を確認 ✅
 - テストユーザーの追加により認証エラーを解消
 
+- `/api/auth/callback` 実装
+  - 認可コードを Google のトークンエンドポイントで `id_token` に交換
+  - `token` を HttpOnly Cookie に保存（Secure, Lax 設定）
+- Cookie保存を DevTools で確認 ✅
+
 ### 次のアクション：
 
-- `/api/auth/callback` のエンドポイントを作成
-  - 認可コード → `access_token` / `id_token` に交換
-  - JWT を Cookie に保存
+- `/api/me` 実装
+  - CookieからJWTを読み取り、ユーザー情報を返すAPI
+  - 後でJWT署名検証も追加予定

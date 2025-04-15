@@ -9,7 +9,7 @@ last_updated: 2025-04-15
 
 ## 🎯 最小構成ログインAPIの完成
 
-- [ ] `/auth/login` のリダイレクト処理実装（Google OAuthプロバイダ）
+- [x] `/auth/login` のリダイレクト処理実装（Google OAuthプロバイダ）
 - [ ] `/api/auth/callback` のトークン取得 → JWT保存（HttpOnly Cookie）処理
 - [ ] `/api/me` JWT検証 → ユーザー情報返却処理
 - [ ] `/api/logout` Cookie削除 → ログアウト処理

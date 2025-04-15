@@ -22,3 +22,16 @@ last_updated: 2025-04-15
 
 - `/auth/login` ルートの `page.tsx` ＋ `redirect()` 実装
 - `GOOGLE_CLIENT_ID` など環境変数の `.env.local` 設定
+
+### 完了：
+
+- Google Cloud Console にて OAuth 同意画面・認証情報を設定
+- `.env.local` に `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `NEXT_PUBLIC_APP_URL` を設定
+- `/auth/login` にアクセス → Googleログイン画面へ遷移を確認 ✅
+- テストユーザーの追加により認証エラーを解消
+
+### 次のアクション：
+
+- `/api/auth/callback` のエンドポイントを作成
+  - 認可コード → `access_token` / `id_token` に交換
+  - JWT を Cookie に保存

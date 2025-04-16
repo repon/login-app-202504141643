@@ -2,7 +2,7 @@
 title: タスク一覧
 type: task
 status: active
-last_updated: 2025-04-15
+last_updated: 2025-04-16
 ---
 
 # ✅ 実装Todo（OAuthログインアプリ）
@@ -12,7 +12,7 @@ last_updated: 2025-04-15
 - [x] `/auth/login` のリダイレクト処理実装（Google OAuthプロバイダ）
 - [x] `/api/auth/callback` のトークン取得 → JWT保存（HttpOnly Cookie）処理
 - [x] `/api/me` JWT検証 → ユーザー情報返却処理
-- [ ] `/api/logout` Cookie削除 → ログアウト処理
+- [x] `/api/logout` Cookie削除 → ログアウト処理
 
 ## 🧱 セッション・Cookie制御
 
@@ -24,7 +24,7 @@ last_updated: 2025-04-15
 ## 🗃 DB処理（Prisma）
 
 - [x] Prisma schema に `User` モデルを定義
-- [ ] 初回ログイン時のみ `User` を `upsert`（なければ挿入）する処理を追加
+- [x] 初回ログイン時のみ `User` を `upsert`（なければ挿入）する処理を追加
 
 ## 🧭 認証状態のルール実装
 

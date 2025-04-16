@@ -73,3 +73,18 @@ last_updated: 2025-04-16
 
 - PrismaでログインユーザーをDBに保存（emailをキーにUpsert）
 - `middleware.ts` によるログイン必須ルートの制御
+
+## 2025-04-16（続き）
+
+### 完了：
+
+- `/api/auth/callback` にユーザー保存処理を追加
+  - `verifyGoogleToken()` の署名検証後、payload から `email`, `name`, `picture` を取得
+  - `prisma.user.upsert()` により、DBに `User` レコードを保存（Railway上のPostgreSQLで確認 ✅）
+- `verifyGoogleToken()` に try/catch を導入し、呼び出し側で null 判定が可能な構成に変更
+- 型 `GoogleTokenPayload` を定義し、payload の型安全を実現
+
+### 次のアクション：
+
+- `middleware.ts` を実装し、ログイン必須ルートにアクセス制御を追加
+- フロントエンドでログイン状態の表示を切り替える UI を追加

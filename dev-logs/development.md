@@ -23,7 +23,7 @@ last_updated: 2025-04-15
 
 ## 🗃 DB処理（Prisma）
 
-- [ ] Prisma schema に `User` モデルを定義
+- [x] Prisma schema に `User` モデルを定義
 - [ ] 初回ログイン時のみ `User` を `upsert`（なければ挿入）する処理を追加
 
 ## 🧭 認証状態のルール実装

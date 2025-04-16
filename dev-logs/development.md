@@ -16,14 +16,14 @@ last_updated: 2025-04-15
 
 ## 🧱 セッション・Cookie制御
 
-- [ ] Cookie仕様定義（HttpOnly / Secure / SameSite=Lax / Max-Age 3600）
-- [ ] JWTの保存場所、検証方法の決定（OAuthプロバイダの公開鍵を使用）
-- [ ] JWT検証ロジックを `lib/auth.ts` に実装
-- [ ] Cookieの削除処理を `logout` APIに実装
+- [x] Cookie仕様定義（HttpOnly / Secure / SameSite=Lax / Max-Age 3600）
+- [x] JWTの保存場所、検証方法の決定（OAuthプロバイダの公開鍵を使用）
+- [x] JWT検証ロジックを `src/lib/verify-jwt.ts` に実装
+- [x] Cookieの削除処理を `logout` APIに実装
 
 ## 🗃 DB処理（Prisma）
 
-- [ ] Prisma schema に `User` モデルを定義済み
+- [ ] Prisma schema に `User` モデルを定義
 - [ ] 初回ログイン時のみ `User` を `upsert`（なければ挿入）する処理を追加
 
 ## 🧭 認証状態のルール実装

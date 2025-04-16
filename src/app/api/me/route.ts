@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import jwt from 'jsonwebtoken'
+import { verifyGoogleToken } from '@/lib/verify-jwt'
 
 export async function GET(req: NextRequest) {
   const token = req.cookies.get('token')?.value
@@ -9,19 +9,15 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const decoded = jwt.decode(token) as { email: string; name?: string; picture?: string }
+    const payload = await verifyGoogleToken(token)
 
-    if (!decoded || !decoded.email) {
+    if (!payload) {
       return NextResponse.json({ error: 'Invalid token' }, { status: 401 })
     }
 
-    return NextResponse.json({
-      email: decoded.email,
-      name: decoded.name,
-      avatar: decoded.picture,
-    })
+    return NextResponse.json({ payload })
   } catch (error) {
-    console.error('Token validation error:', error)
+    console.error('JWT verify failed:', error)
     return NextResponse.json({ error: 'Invalid token' }, { status: 401 })
   }
 }

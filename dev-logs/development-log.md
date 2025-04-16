@@ -2,7 +2,7 @@
 title: 実装ログ
 type: log
 status: active
-last_updated: 2025-04-15
+last_updated: 2025-04-16
 ---
 
 # 🛠 開発ログ（OAuthログインアプリ）
@@ -58,8 +58,18 @@ last_updated: 2025-04-15
 - ブラウザ操作で `Logout` ボタン押下 → Cookie削除 ✅
 - `/api/me` にアクセス → `401 Unauthorized` を返すことを確認 ✅（ログアウト成功）
 
-### 次のアクション候補：
+## 2025-04-16
 
-- JWTの署名検証（`jose`でGoogle公開鍵を取得してverify）
-- PrismaでUserをDBに保存（emailをキーにUpsert）
-- `middleware.ts` を導入して、ログイン必須ページのアクセス制御を行う
+### 完了：
+
+- JWT署名の検証機構を導入（ライブラリ：`jose`）
+- GoogleのJWK公開鍵セットを `createRemoteJWKSet()` で取得・キャッシュ
+- `verifyGoogleToken(token)` 関数を `lib/verify-jwt.ts` に実装
+- `/api/me` にて `jwt.decode()` → `jwtVerify()` に置き換え
+- 改ざんされたトークン・期限切れトークンでは `401 Unauthorized` を返すよう動作確認 ✅
+- 旧ライブラリ `jsonwebtoken` を削除し、`pnpm lint` / `pnpm dev` 問題なし ✅
+
+### 次のアクション：
+
+- PrismaでログインユーザーをDBに保存（emailをキーにUpsert）
+- `middleware.ts` によるログイン必須ルートの制御

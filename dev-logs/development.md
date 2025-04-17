@@ -2,7 +2,7 @@
 title: タスク一覧
 type: task
 status: active
-last_updated: 2025-04-16
+last_updated: 2025-04-17
 ---
 
 # ✅ 実装Todo（OAuthログインアプリ）
@@ -30,7 +30,7 @@ last_updated: 2025-04-16
 
 - [x] `middleware.ts`：Cookieなければ `/auth/login` にリダイレクト
 - [x] `/dashboard` 等の保護ルートで `middleware.ts` を活用
-- [ ] `useAuth()` composableの実装（`/api/me` を叩いて状態管理）
+- [x] `useAuth()` composableの実装（`/api/me` を叩いて状態管理）
 
 ## 🧹 UI・コードの整理
 
@@ -45,3 +45,31 @@ last_updated: 2025-04-16
 - [x] `pnpm format` / `pnpm lint` 動作確認済み
 - [x] Husky導入（pre-commitで整形＆lintチェック）
 - [x] `dev-logs/setup_log.md` に導入記録を保存済み
+
+## 🚀 応用フェーズ（ログイン機能の再利用／アプリとしての完成度強化）
+
+このログインアプリは「ほぼ全ての現場で必要」「汎用・疎結合にできる」機能群の1つとして構築されており、将来的に以下のような方針で他アプリへ再利用されることを想定しています。
+
+---
+
+### 🧩 再利用に向けた設計タスク
+
+- [ ] `lib/auth`, `hooks/useAuth.ts`, `middleware/authGuard.ts` を他アプリでも利用可能な構造で保持する
+- [ ] 今後構築予定の以下のアプリに、ログイン機能を内包させて実装する
+  - [ ] パスワードリセット機能アプリ（password-reset-app）
+  - [ ] RBAC権限管理アプリ（rbac-app）
+  - [ ] その他フォーム・タスク系アプリ（予定）
+- [ ] 将来的に `/packages/auth` へ切り出し、ライブラリ化することも想定する
+
+---
+
+### 🔧 アプリとしての完成度向上タスク（再利用とは別軸）
+
+- [ ] Prisma User モデルのロール対応（`role: 'user' | 'admin'`）と `/admin` ページ制御
+- [ ] `/auth/login` にメール＋パスワード認証フォーム（bcrypt対応）を追加
+- [ ] トークン期限切れ時の自動リダイレクト（JWT `exp` に応じて）
+- [ ] UIコンポーネントの分離（Header / Footer / ProtectedPage など）
+- [ ] Tailwind を活用した見た目の整理
+- [ ] APIの型定義強化（`zod` や型ガード導入）
+- [ ] テスト自動化（`/api/me`, `/api/logout`, `/api/auth/callback` 等を `supertest` 等で検証）
+- [ ] 本番反映に向けた `.env.production`, Vercel環境変数整備

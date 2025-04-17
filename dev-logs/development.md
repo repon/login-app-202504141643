@@ -28,8 +28,8 @@ last_updated: 2025-04-16
 
 ## 🧭 認証状態のルール実装
 
-- [ ] `middleware.ts`：Cookieなければ `/auth/login` にリダイレクト
-- [ ] `/dashboard` 等の保護ルートで `middleware.ts` を活用
+- [x] `middleware.ts`：Cookieなければ `/auth/login` にリダイレクト
+- [x] `/dashboard` 等の保護ルートで `middleware.ts` を活用
 - [ ] `useAuth()` composableの実装（`/api/me` を叩いて状態管理）
 
 ## 🧹 UI・コードの整理

@@ -2,7 +2,7 @@
 title: 実装ログ
 type: log
 status: active
-last_updated: 2025-04-16
+last_updated: 2025-04-17
 ---
 
 # 🛠 開発ログ（OAuthログインアプリ）
@@ -102,3 +102,21 @@ last_updated: 2025-04-16
 
 - `useAuth()` フックでログイン状態をクライアント側で取得
 - UI側でログイン/ログアウトの出し分けを行う
+
+## 2025-04-17
+
+### 完了：
+
+- `/api/me` のレスポンスを `payload` 経由で正しく `setUser()` に渡すよう修正
+  - それにより `user.name`, `user.email`, `user.avatar` が null になる問題を解消 ✅
+- `Header.tsx` にて `useAuth()` フックを使い、ログイン状態に応じて表示を出し分け
+  - ログイン時：ユーザー名・アイコン・ログアウトボタン表示
+  - 未ログイン時：「ログイン」リンクを表示
+- `a href="/api/logout"` による GET 送信をやめて、`fetch('/api/logout', { method: 'POST' })` に変更し、405エラーを解消 ✅
+- Cookie削除後の表示切り替えも動作確認済み ✅
+- JWT期限切れ時の `/api/me` で `JWTExpired` エラーが検出され、401を返すことを確認 ✅（再ログインにより復旧）
+
+### 次のアクション：
+
+- Context化による `useAuth()` の状態共有（複数コンポーネント対応） ※必要になれば対応
+- JWTのリフレッシュ or 自動再ログイン対応（今後の拡張課題）

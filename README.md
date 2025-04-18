@@ -30,7 +30,7 @@ Auth.js や NextAuth などの認証ライブラリには頼らず、OAuth連携
 | ORM            | Prisma                                           |
 | DB             | Railway 上の PostgreSQL                          |
 | デプロイ       | Vercel                                           |
-| 認証           | OAuth2（Google/GitHubなど）                      |
+| 認証           | OAuth2（Google）                                 |
 | トークン       | id_token（JWT）                                  |
 | セッション管理 | `Set-Cookie`（HttpOnly / Secure / SameSite=Lax） |
 
@@ -171,3 +171,35 @@ MIT（ご自由にどうぞ）
 - UI・本番対応の強化（Vercel環境対応、.env.production 整備）
 
 これらを段階的に取り入れていくことで、「構成力のある再利用可能なログイン基盤」としての完成を目指します。
+
+---
+
+## 📄 補足事項（セットアップとセキュリティ）
+
+### 📁 `.env.example` の提供
+
+このアプリでは、Google OAuth連携や外部APIとの接続に `.env.local` が必要です。  
+初期構成として `.env.example` ファイルを同梱しており、以下のような内容を含んでいます：
+
+```env
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+DATABASE_URL=
+```
+
+必要に応じて `.env.local` を作成し、適切な値を設定してください。
+
+---
+
+### 🔐 セキュリティに関する設計の配慮
+
+- JWTは `HttpOnly` Cookie に保存し、XSSから保護されています
+- Cookieには `Secure`, `SameSite=Lax`, `Path=/` を設定済み
+- JWTの `exp`（有効期限）により、自動でセッションが失効します
+- `/api/me` は期限切れや改ざんされたトークンを検出し、401を返します
+- 今後は CSRF やリフレッシュトークン対応も検討予定です
+
+---
+
+このアプリは「学習目的」であると同時に、将来的な実運用を見据えた設計方針を意識して構築されています。

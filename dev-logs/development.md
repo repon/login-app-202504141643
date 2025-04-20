@@ -73,3 +73,36 @@ last_updated: 2025-04-17
 - [ ] APIの型定義強化（`zod` や型ガード導入）
 - [ ] テスト自動化（`/api/me`, `/api/logout`, `/api/auth/callback` 等を `supertest` 等で検証）
 - [ ] 本番反映に向けた `.env.production`, Vercel環境変数整備
+
+## 📣 公開版ログインアプリ（4月完成目標）
+
+このログインアプリは、学習目的とともに「最低限の認証機能を備えた公開可能な構成」を目指しており、以下の条件で4月中の公開を目標とします。
+
+---
+
+### 🎯 4月末までのスコープ（優先実装項目）
+
+- [ ] `/`, `/dashboard` ページを最低限のUIで整備（ログイン状態表示含む）
+- [ ] ナビゲーション表示：Home / Dashboard / Login / Logout（Header）
+- [ ] middleware.ts による保護ルート制御（`/dashboard` に未ログイン時リダイレクト）
+- [ ] `.env.production` 作成と Vercel 本番デプロイ確認
+- [ ] 公開用 `README.md`（目的・仕様・URL）整備
+- [ ] GitHub公開（リポジトリ名、ライセンス、Vercelリンク）
+
+---
+
+### 📦 除外（今回の公開スコープには含まない）
+
+- 自前パスワード認証機能
+- ロール管理／RBAC
+- テスト導入（supertest等）
+- トークン自動リフレッシュ
+
+---
+
+### 📝 公開用READMEとの連携
+
+- 公開用 `README.md` にもこの構成・スコープを明記し、成果物として説明可能な状態に整える。
+- 完了後は `/dev-logs/publish_log.md` に記録を残す。
+
+last_updated: 2025-04-20

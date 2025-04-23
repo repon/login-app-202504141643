@@ -20,7 +20,11 @@ export function useAuth() {
           setUser(null)
         } else {
           const data = await response.json()
-          setUser(data.payload)
+          setUser({
+            email: data.payload.email,
+            name: data.payload.name,
+            avatarUrl: data.payload.picture,
+          })
         }
       } catch (error) {
         console.error('ユーザー情報の取得に失敗しました', error)

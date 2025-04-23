@@ -136,3 +136,11 @@ last_updated: 2025-04-17
 - `/dashboard` でのプロフィール情報編集機能（名前変更）を実装
 - DBの `User` モデルを正規化し、JWTから渡された値と明示的に分けて保持
 - Prismaマイグレーションと `upsert` 処理の修正を含めた構成整理
+
+## 2025-04-24
+
+### 完了：
+
+- `.env.example` を整備し、GOOGLE_CLIENT_ID/SECRET, NEXT_PUBLIC_APP_URL, DATABASE_URL を明記
+- `ENABLE_PRISMA` オプションの追加により、Prisma使用可否をブランチで切り替え可能にした
+- ブランチ構成方針を決定：`main` はJWTのみ構成、`prisma` はDB機能ありの拡張構成

@@ -120,3 +120,19 @@ last_updated: 2025-04-17
 
 - Context化による `useAuth()` の状態共有（複数コンポーネント対応） ※必要になれば対応
 - JWTのリフレッシュ or 自動再ログイン対応（今後の拡張課題）
+
+## 2025-04-20
+
+### 完了：
+
+- `next/image` で Google のプロフィール画像が表示されない問題を修正
+  - ドメイン `lh3.googleusercontent.com` を `next.config.js` に `images.domains` として追加
+- `/dashboard` にてユーザーのプロフィール画像（avatar）を正しく表示できるようになった ✅
+- GitHubログインなど、今後の外部画像表示にも対応できる構成に整備済み
+- `User` モデルの `picture` を `avatarUrl` に統一、コードと型を整理中
+
+### 次のアクション：
+
+- `/dashboard` でのプロフィール情報編集機能（名前変更）を実装
+- DBの `User` モデルを正規化し、JWTから渡された値と明示的に分けて保持
+- Prismaマイグレーションと `upsert` 処理の修正を含めた構成整理

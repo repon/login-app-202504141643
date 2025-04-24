@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from 'next/server'
 import { verifyGoogleToken } from '@/lib/verify-jwt'
 
 export async function GET(req: NextRequest) {
+  // src/app/api/auth/callback/route.ts のどこかで以下を追記！
+
+  const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/callback`
+  console.log('🔁 redirectUri sent to Google:', redirectUri)
+
   const code = req.nextUrl.searchParams.get('code')
   if (!code) {
     return NextResponse.redirect(new URL('/', req.url))

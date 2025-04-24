@@ -6,7 +6,6 @@ export async function GET(req: NextRequest) {
 
   const base = process.env.APP_URL?.replace(/\/$/, '') ?? ''
   const redirectUri = `${base}/api/auth/callback`
-  console.log('🔁 redirectUri sent to Google:', redirectUri)
 
   const code = req.nextUrl.searchParams.get('code')
   if (!code) {

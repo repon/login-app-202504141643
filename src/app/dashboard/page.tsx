@@ -14,8 +14,6 @@ export default function DashboardPage() {
     return <p className="text-red-500">このページはログインが必要です。ログインしてください。</p>
   }
 
-  console.log(user)
-
   return (
     <div className="space-y-4">
       <h2 className="text-xl font-bold">ようこそ、{user.name}さん</h2>

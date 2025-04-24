@@ -18,7 +18,6 @@
     ]
   },
   "dependencies": {
-    "@prisma/client": "^6.6.0",
     "jose": "^6.0.10",
     "next": "15.3.0",
     "react": "^19.0.0",
@@ -36,7 +35,6 @@
     "husky": "^8.0.0",
     "lint-staged": "^15.5.1",
     "prettier": "^3.5.3",
-    "prisma": "^6.6.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

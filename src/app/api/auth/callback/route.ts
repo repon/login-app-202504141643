@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyGoogleToken } from '@/lib/verify-jwt'
-import { prisma } from '@/lib/prisma'
 
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get('code')
@@ -34,22 +33,6 @@ export async function GET(req: NextRequest) {
   if (!payload) {
     return NextResponse.redirect(new URL('/auth/login?error=verify', req.url))
   }
-
-  // 🧠 DBにユーザーを保存（Upsert）
-  const { email, name, picture } = payload
-
-  await prisma.user.upsert({
-    where: { email },
-    update: {
-      name,
-      avatarUrl: picture,
-    },
-    create: {
-      email,
-      name,
-      avatarUrl: picture,
-    },
-  })
 
   // 🍪 トークンをCookieに保存してリダイレクト
   const res = NextResponse.redirect(new URL('/', req.url))

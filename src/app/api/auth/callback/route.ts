@@ -40,7 +40,7 @@ export async function GET(req: NextRequest) {
   }
 
   // 🍪 トークンをCookieに保存してリダイレクト
-  const res = NextResponse.redirect(new URL('/', req.url))
+  const res = NextResponse.redirect(new URL('/dashboard', req.url))
   res.cookies.set({
     name: 'token',
     value: id_token,

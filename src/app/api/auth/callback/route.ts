@@ -4,7 +4,7 @@ import { verifyGoogleToken } from '@/lib/verify-jwt'
 export async function GET(req: NextRequest) {
   // src/app/api/auth/callback/route.ts のどこかで以下を追記！
 
-  const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/callback`
+  const redirectUri = `${process.env.APP_URL}/api/auth/callback`
   console.log('🔁 redirectUri sent to Google:', redirectUri)
 
   const code = req.nextUrl.searchParams.get('code')
@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
       code,
       client_id: process.env.GOOGLE_CLIENT_ID!,
       client_secret: process.env.GOOGLE_CLIENT_SECRET!,
-      redirect_uri: process.env.NEXT_PUBLIC_APP_URL + '/api/auth/callback',
+      redirect_uri: process.env.APP_URL + '/api/auth/callback',
       grant_type: 'authorization_code',
     }),
   })

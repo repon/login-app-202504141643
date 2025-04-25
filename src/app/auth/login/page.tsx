@@ -6,7 +6,12 @@ export default function LoginPage() {
   const SCOPE = 'openid profile email'
   const RESPONSE_TYPE = 'code'
 
-  const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${REDIRECT_URL}&response_type=${RESPONSE_TYPE}&scope=${encodeURIComponent(SCOPE)}&prompt=select_account`
+  const googleAuthUrl = new URL('https://accounts.google.com/o/oauth2/v2/auth')
+  googleAuthUrl.searchParams.set('client_id', GOOGLE_CLIENT_ID!)
+  googleAuthUrl.searchParams.set('redirect_uri', REDIRECT_URL)
+  googleAuthUrl.searchParams.set('response_type', RESPONSE_TYPE)
+  googleAuthUrl.searchParams.set('scope', SCOPE)
+  googleAuthUrl.searchParams.set('prompt', 'select_account')
 
-  redirect(googleAuthUrl)
+  redirect(googleAuthUrl.href)
 }

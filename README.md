@@ -58,8 +58,14 @@ npm run dev
 ## 📁 .env 設定例
 
 ```env
+# ✅ Google OAuth 認証に必要（Google Cloud Console で取得）
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
+# ✅ アプリのベースURL（Vercelデプロイ時は本番URLに）
+NODE_ENV=development
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 APP_URL=http://localhost:3000
-JWT_SECRET=your_jwt_secret_key
 ```
 
 ---
@@ -80,4 +86,4 @@ JWT_SECRET=your_jwt_secret_key
 - フロントエンドエンジニア歴5年（Vue, React）
 - 要件定義・API設計から実装・運用まで一貫対応
 - [Twitter](https://x.com/ha20250121)
-- ポートフォリオ: [https://yourname.dev](https://yourname.dev)
+- ポートフォリオ: [Github プロフィールページ](https://github.com/repon)

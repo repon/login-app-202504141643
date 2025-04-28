@@ -1,6 +1,7 @@
-# 🔐 OAuthログインアプリ（開発者向け）
+# 🔐 OAuthログインアプリ
 
-このアプリは、Next.js（App Router）による**セキュアなOAuthログイン処理**を学習目的で実装したものです。BFF構成を採用し、Auth.js / NextAuth等を使わずに、OAuth認証・JWT処理・Cookie管理を**すべて自前で実装**しています。
+このアプリは、Next.js（App Router）による**セキュアなOAuthログイン処理**を学習目的で実装したものです。
+BFF構成を採用し、Auth.js / NextAuth等を使わずに、OAuth認証・JWT処理・Cookie管理を**すべて自前で実装**しています。
 
 ---
 
@@ -122,10 +123,14 @@ sequenceDiagram
 ### `.env.example`
 
 ```env
+# Google OAuth 認証に必要（Google Cloud Console で取得）
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
+
+# アプリのベースURL（Vercelデプロイ時は本番URLに）
+NODE_ENV=development
 NEXT_PUBLIC_APP_URL=http://localhost:3000
-DATABASE_URL=
+APP_URL=http://localhost:3000
 ```
 
 ### Cursor連携について

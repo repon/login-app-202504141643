@@ -67,6 +67,28 @@
 
 ---
 
+## シーケンス図
+
+```mermaid
+sequenceDiagram
+  participant U as User
+  participant B as Browser
+  participant S as Server
+  participant G as Google
+
+  U->>B: クリック（ログイン）<br/>（ページ: `/auth/login`）
+  B->>S: GET /auth/login<br/>（サーバ: `/app/auth/login/page.tsx`）
+  S->>G: Google認可エンドポイントにリダイレクト
+  G->>S: リダイレクトバック + 認可コード<br/>（URL: `/api/auth/callback?code=xxx`）
+  S->>G: POST /token でアクセストークン取得<br/>（サーバ: `/app/api/auth/callback/route.ts`）
+  S->>S: JWT生成・Set-Cookie
+  S-->>B: リダイレクト（/dashboard）<br/>（ページ: `/dashboard`）
+  B->>S: GET /api/me<br/>（サーバ: `/app/api/me/route.ts`）
+  S-->>B: ユーザー情報を返却（ログイン状態表示）
+```
+
+---
+
 ## 🧠 補足：再利用構成と拡張計画
 
 ### 再利用に向けた構成

@@ -7,8 +7,16 @@
 
 ## 🚀 デモ
 
-- アプリURL: [https://yourname.vercel.app](https://yourname.vercel.app)
-- GitHubリポジトリ: [https://github.com/yourname/login-app](https://github.com/yourname/login-app)
+- [アプリURL](https://login-app-murex-kappa.vercel.app/)
+- [GitHubリポジトリ](https://github.com/repon/login-app-202504141643)
+
+---
+
+## シーケンス図
+
+以下は、ログイン処理の概要フローです：
+
+![ログインシーケンス図](dev-docs/sequence-login.png)
 
 ---
 
@@ -29,7 +37,8 @@
   - `HttpOnly` CookieにJWTを保存して、セキュアなログインを実現
 - **`/api/me`によるユーザー状態取得**：
   - ページ描画時に認証状態をチェックし、ログイン後の表示を制御
-- **middleware.ts or useAuth()** によるルート保護
+- **middleware.ts** によるルートアクセス制御（未認証なら /auth/login へ）
+- **useAuth()** によるクライアント側の状態管理と表示切り替え
 - **Tailwind CSS** による簡潔なUI構築
 
 ---
@@ -37,7 +46,7 @@
 ## 📦 セットアップ手順
 
 ```bash
-git clone https://github.com/yourname/login-app.git
+git clone https://github.com/repon/login-app-202504141643
 cd login-app
 cp .env.example .env
 npm install
@@ -70,5 +79,5 @@ JWT_SECRET=your_jwt_secret_key
 
 - フロントエンドエンジニア歴5年（Vue, React）
 - 要件定義・API設計から実装・運用まで一貫対応
-- Twitter: [@yourname](https://twitter.com/yourname)
+- [Twitter](https://x.com/ha20250121)
 - ポートフォリオ: [https://yourname.dev](https://yourname.dev)

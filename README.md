@@ -8,7 +8,6 @@
 ## 🚀 デモ
 
 - [アプリURL](https://login-app-murex-kappa.vercel.app/)
-- [GitHubリポジトリ](https://github.com/repon/login-app-202504141643)
 
 ---
 

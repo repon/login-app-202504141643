@@ -46,7 +46,7 @@
 
 ```bash
 git clone https://github.com/repon/login-app-202504141643
-cd login-app
+cd login-app-202504141643
 cp .env.example .env
 npm install
 npm run dev

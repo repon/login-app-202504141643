@@ -231,3 +231,68 @@ interface ErrorResponse {
 - ログアウト状態と判定されてもCookieが残り、/dashboardに遷移してもログイン画面にリダイレクトされない問題が発生している。
 - 以前はログアウト状態と判定された際にCookieを削除していたが、リファクタリング後はこの挙動が変化している可能性がある。
 - 今後のリファクタリングでこの問題も解消する。
+
+### テスト項目一覧（導入する場合）
+
+**1. 認証関連**
+
+- 正常なJWTでのログイン状態取得（/api/me）
+  - 推奨: supertest, jest
+- 無効なJWTでの401レスポンスとCookie削除
+  - 推奨: supertest, jest
+- JWT期限切れ時の401レスポンスとCookie削除
+  - 推奨: supertest, jest, time-mocking
+- ログアウトAPI実行後、Cookieが削除されること
+  - 推奨: supertest, jest
+
+**2. ルーティング・ガード**
+
+- 未認証で/dashboardアクセス時、/auth/loginへリダイレクトされる
+  - 推奨: supertest, jest
+- 認証済みで/dashboardアクセス時、ユーザー情報が正しく表示される
+  - 推奨: supertest, jest
+
+**3. APIエンドポイント**
+
+- /api/me: 正常系（payloadあり）・異常系（error型、Cookie削除）
+  - 推奨: supertest, jest
+- /api/logout: 正常系（message）・異常系（error型）
+  - 推奨: supertest, jest
+
+**4. UI表示**
+
+- ログイン状態でユーザー名・メールアドレスが表示される
+  - 推奨: @testing-library/react, jest
+- 未ログイン時は「ログインが必要です」等のメッセージが表示される
+  - 推奨: @testing-library/react, jest
+
+**5. E2Eテスト（オプション）**
+
+- ログイン〜ダッシュボード〜ログアウトまでの一連のユーザー操作フロー
+  - 推奨: Playwright
+- Cookieのセット・削除、リダイレクト挙動のブラウザレベル検証
+  - 推奨: Playwright
+
+### セキュリティ強化案
+
+#### CSRF対策
+
+- 認証CookieはHttpOnly/SameSite=Laxで運用（現状十分）
+- 重要なPOST系API追加時はCSRFトークン方式の導入を検討
+  - 推奨ライブラリ例: csurf, @fastify/csrf-protection など
+
+#### レート制限（Rate Limiting）
+
+- 主要API（/api/auth/callback, /api/me, /api/logout等）にレートリミットを導入
+  - 例: 1分間に10回まで
+  - 推奨ライブラリ例: rate-limiter-flexible, @vercel/edge-rate-limit
+
+### 2024-05-02 リファクタリング・改善内容まとめ
+
+- 認証関連コード（verify-jwt.ts, useAuth.ts, middleware等）の責務分離・型定義強化・エラーハンドリング統一を実施
+- APIレスポンス型（成功・エラー）を明示し、全APIでエラーレスポンス形式を統一
+- 認証失敗時やトークン不正時には必ずCookieを削除する運用に統一
+- /api/logout, middleware等も含めてCookie削除・認証状態管理の一貫性を確保
+- テスト観点を洗い出し、API・UI・E2Eそれぞれに推奨ライブラリを明記
+- セキュリティ強化案（CSRF対策・レート制限）を整理し、今後の拡張方針も明確化
+- README.md, README.dev.mdと現状の実装に大きな齟齬はないが、型定義・エラー形式・セキュリティ・テスト方針など細かい運用はdevelopment.mdに詳細を記載

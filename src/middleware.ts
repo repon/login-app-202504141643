@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { verifyGoogleToken } from '@/lib/verify-jwt'
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const token = req.cookies.get('token')?.value
-
-  const isLoggedIn = !!token
   const isProtectedPath = req.nextUrl.pathname.startsWith('/dashboard')
 
-  if (!isLoggedIn && isProtectedPath) {
+  const verified = token && (await verifyGoogleToken(token))
+
+  if (!verified && isProtectedPath) {
     const loginUrl = new URL('/auth/login', req.url)
     return NextResponse.redirect(loginUrl)
   }

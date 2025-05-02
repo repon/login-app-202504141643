@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 type User = {
   email: string
@@ -11,21 +12,29 @@ type User = {
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
+  const router = useRouter()
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await fetch('/api/me')
+
+        if (response.status === 401) {
+          setUser(null)
+          return
+        }
+
         if (!response.ok) {
           setUser(null)
-        } else {
-          const data = await response.json()
-          setUser({
-            email: data.payload.email,
-            name: data.payload.name,
-            avatarUrl: data.payload.picture,
-          })
+          return
         }
+
+        const data = await response.json()
+        setUser({
+          email: data.payload.email,
+          name: data.payload.name,
+          avatarUrl: data.payload.picture,
+        })
       } catch (error) {
         console.error('ユーザー情報の取得に失敗しました', error)
         setUser(null)
@@ -35,7 +44,7 @@ export function useAuth() {
     }
 
     fetchUser()
-  }, [])
+  }, [router])
 
   return { user, loading }
 }

@@ -234,15 +234,11 @@ interface ErrorResponse {
 
 ### テスト項目一覧（導入する場合）
 
-**1. 認証関連**
+**1. APIエンドポイント**
 
-- 正常なJWTでのログイン状態取得（/api/me）
+- /api/me: 正常系（payloadあり）・異常系（error型、Cookie削除）
   - 推奨: supertest, jest
-- 無効なJWTでの401レスポンスとCookie削除
-  - 推奨: supertest, jest
-- JWT期限切れ時の401レスポンスとCookie削除
-  - 推奨: supertest, jest, time-mocking
-- ログアウトAPI実行後、Cookieが削除されること
+- /api/logout: 正常系（message）・異常系（error型）
   - 推奨: supertest, jest
 
 **2. ルーティング・ガード**
@@ -252,26 +248,30 @@ interface ErrorResponse {
 - 認証済みで/dashboardアクセス時、ユーザー情報が正しく表示される
   - 推奨: supertest, jest
 
-**3. APIエンドポイント**
-
-- /api/me: 正常系（payloadあり）・異常系（error型、Cookie削除）
-  - 推奨: supertest, jest
-- /api/logout: 正常系（message）・異常系（error型）
-  - 推奨: supertest, jest
-
-**4. UI表示**
+**3. UI表示**
 
 - ログイン状態でユーザー名・メールアドレスが表示される
   - 推奨: @testing-library/react, jest
 - 未ログイン時は「ログインが必要です」等のメッセージが表示される
   - 推奨: @testing-library/react, jest
 
-**5. E2Eテスト（オプション）**
+**4. E2Eテスト（オプション）**
 
 - ログイン〜ダッシュボード〜ログアウトまでの一連のユーザー操作フロー
   - 推奨: Playwright
 - Cookieのセット・削除、リダイレクト挙動のブラウザレベル検証
   - 推奨: Playwright
+
+**5. 認証関連**
+
+- 正常なJWTでのログイン状態取得（/api/me）
+  - 推奨: supertest, jest
+- 無効なJWTでの401レスポンスとCookie削除
+  - 推奨: supertest, jest
+- JWT期限切れ時の401レスポンスとCookie削除
+  - 推奨: supertest, jest, time-mocking
+- ログアウトAPI実行後、Cookieが削除されること
+  - 推奨: supertest, jest
 
 ### セキュリティ強化案
 

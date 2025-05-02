@@ -9,7 +9,15 @@ export async function middleware(req: NextRequest) {
 
   if (!verified && isProtectedPath) {
     const loginUrl = new URL('/auth/login', req.url)
-    return NextResponse.redirect(loginUrl)
+    const res = NextResponse.redirect(loginUrl)
+    res.cookies.set('token', '', {
+      maxAge: 0,
+      path: '/',
+      httpOnly: true,
+      secure: true,
+      sameSite: 'lax',
+    })
+    return res
   }
 
   return NextResponse.next()

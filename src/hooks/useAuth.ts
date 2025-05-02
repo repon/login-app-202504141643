@@ -9,7 +9,12 @@ type User = {
   avatarUrl?: string
 }
 
-export function useAuth() {
+type UseAuthOptions = {
+  redirectOnFail?: boolean
+}
+
+export function useAuth(options: UseAuthOptions = {}) {
+  const { redirectOnFail = true } = options
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const router = useRouter()
@@ -21,6 +26,11 @@ export function useAuth() {
 
         if (response.status === 401) {
           setUser(null)
+
+          if (redirectOnFail) {
+            router.push('/auth/login')
+          }
+
           return
         }
 
@@ -44,7 +54,7 @@ export function useAuth() {
     }
 
     fetchUser()
-  }, [router])
+  }, [router, redirectOnFail])
 
   return { user, loading }
 }

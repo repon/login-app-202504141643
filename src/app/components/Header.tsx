@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth'
 
 export default function Header() {
-  const { user, loading } = useAuth()
+  const { user, loading } = useAuth({ redirectOnFail: false })
 
   return (
     <header className="flex justify-between items-center px-4 py-2 border-b">

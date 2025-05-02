@@ -3,7 +3,7 @@
 import { useAuth } from '@/hooks/useAuth'
 
 export default function HomePage() {
-  const { user, loading } = useAuth()
+  const { user, loading } = useAuth({ redirectOnFail: false })
 
   return (
     <div className="space-y-4">
